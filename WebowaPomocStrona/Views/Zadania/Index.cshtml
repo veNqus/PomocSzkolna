@@ -1,0 +1,35 @@
+﻿@model IEnumerable<WebowaPomocStrona.Models.Zadanie>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Zadania</h2>
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>Zajecia</th>
+        <th>Temat</th>
+        <th>Termin</th>
+    </tr>
+        @foreach (var zadanie in Model)
+        {
+            if (zadanie.CzyZrobione == false)
+            {
+                <tr class="warning">
+                    <td>@Html.ActionLink(@zadanie.Zajecia.Nazwa, "Details", "Zadania", new { Id = zadanie.Id }, null)</td>
+                    <td>@zadanie.Temat</td>
+                    <td>@zadanie.Termin</td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td>@Html.ActionLink(@zadanie.Zajecia.Nazwa, "Details", "Zadania", new { Id = zadanie.Id }, null)</td>
+                    <td>@zadanie.Temat</td>
+                    <td>@zadanie.Termin</td>
+                </tr>
+            }
+        }
+    </table>
+
+                

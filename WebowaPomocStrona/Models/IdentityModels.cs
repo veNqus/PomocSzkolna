@@ -20,6 +20,11 @@ namespace WebowaPomocStrona.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Zadanie> Zadania { get; set; }
+        public DbSet<Zajecia> Zajecia { get; set; }
+
+
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -27,6 +32,7 @@ namespace WebowaPomocStrona.Models
 
         public static ApplicationDbContext Create()
         {
+
             return new ApplicationDbContext();
         }
     }
