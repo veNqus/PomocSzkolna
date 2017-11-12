@@ -1,0 +1,27 @@
+﻿@model IEnumerable<WebowaPomocStrona.Models.Zajecia>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Zajęcia</h2>
+@using (Html.BeginForm("New", "Zajecia"))
+{
+<button type="submit" class="btn btn-primary">Nowe Zajęcia</button>
+}
+
+@if (Model == null)
+{
+    <a>Nie masz przypisanych żadnych zajęć.</a>
+}
+else
+{
+    <br/>
+    <ul>
+        @foreach (var zajecia in Model)
+        {
+            <li>@zajecia.Nazwa</li>
+        }
+    </ul>
+}
+

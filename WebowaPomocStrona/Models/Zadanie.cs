@@ -12,6 +12,7 @@ namespace WebowaPomocStrona.Models
         public string Temat { get; set; }
         public string Informacje { get; set; }
         public Zajecia Zajecia { get; set; }
+        public int ZajeciaId { get; set; }
 
         //public int IdZajec { get; set; }
 
@@ -23,5 +24,7 @@ namespace WebowaPomocStrona.Models
 
         [Display(Name = "Czy Zrobione?")]
         public bool CzyZrobione { get; set; } = false;
+
+        public string IdUzytkownika { get; set; }
     }
 }

@@ -5,12 +5,22 @@
 }
 
 <h2>Zadania</h2>
-<table class="table table-bordered table-hover">
-    <tr>
-        <th>Zajecia</th>
-        <th>Temat</th>
-        <th>Termin</th>
-    </tr>
+@using (Html.BeginForm("New", "Zadania"))
+{
+    <button type="submit" class="btn btn-primary">Nowe Zadanie</button>
+}
+@if(Model == null)
+{
+    <a>Brak jakichkolwiek zadań.</a>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>Zajecia</th>
+            <th>Temat</th>
+            <th>Termin</th>
+        </tr>
         @foreach (var zadanie in Model)
         {
             if (zadanie.CzyZrobione == false)
@@ -31,5 +41,7 @@
             }
         }
     </table>
+}
+
 
                 

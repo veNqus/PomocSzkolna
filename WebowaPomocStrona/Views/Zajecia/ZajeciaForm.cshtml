@@ -1,0 +1,18 @@
+﻿@model WebowaPomocStrona.Models.Zajecia
+@{
+    ViewBag.Title = "ZajeciaForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Dodaj Zajęcia</h2>
+@using (Html.BeginForm("Save", "Zajecia"))
+{
+    <div class="from-group">
+        @Html.LabelFor(m => m.Nazwa)
+        @Html.TextBoxFor(m => m.Nazwa, new { @class = "form-control" })
+    </div>
+    @Html.HiddenFor(m => m.Id)
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+
