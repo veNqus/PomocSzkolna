@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using WebowaPomocStrona.ViewModels;
 using WebowaPomocStrona.Models;
 using Microsoft.AspNet.Identity;
 
@@ -40,14 +41,35 @@ namespace WebowaPomocStrona.Controllers
         public ActionResult Save(Zajecia zajecia)
         {
             var UserId = User.Identity.GetUserId();
-            zajecia.IdUzytkownika = UserId;
             if(zajecia.Id== 0)
             {
+                zajecia.IdUzytkownika = UserId;
                 _context.Zajecia.Add(zajecia);
+            }
+            else
+            {
+                var ZajeciaInDb = _context.Zajecia.Single(c => c.Id == zajecia.Id);
+
+                ZajeciaInDb.Nazwa = zajecia.Nazwa;
             }
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Zajecia");
+        }
+
+        public ActionResult Edit(int Id)
+        {
+            var userID = User.Identity.GetUserId();
+            var zajecia = _context.Zajecia.SingleOrDefault(c => c.IdUzytkownika == userID);
+            if (zajecia == null)
+                return HttpNotFound();
+
+            var ZajeciaViewModel = new EditZajeciaViewModel
+            {
+                zajecia = zajecia
+
+            };
+            return View("ZajeciaForm", ZajeciaViewModel);
         }
     }
 }

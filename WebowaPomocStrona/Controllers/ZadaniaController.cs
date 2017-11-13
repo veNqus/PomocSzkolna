@@ -48,15 +48,79 @@ namespace WebowaPomocStrona.Controllers
         public ActionResult Save(Zadanie zadanie)
         {
             var userID = User.Identity.GetUserId();
-            zadanie.DataDodania = DateTime.Now;
-            zadanie.CzyZrobione = false;
-            zadanie.IdUzytkownika = userID;
             if (zadanie.Id == 0)
+            {
+                zadanie.DataDodania = DateTime.Now;
+                zadanie.CzyZrobione = false;
+                zadanie.IdUzytkownika = userID;
                 _context.Zadania.Add(zadanie);
+            }
+            else
+            {
+                var ZadanieInDb = _context.Zadania.Single(c => c.Id == zadanie.Id);
+
+                ZadanieInDb.Temat = zadanie.Temat;
+                ZadanieInDb.Termin = zadanie.Termin;
+                ZadanieInDb.ZajeciaId = zadanie.ZajeciaId;
+                ZadanieInDb.Informacje = zadanie.Informacje;
+
+            }
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Zadania");
+        }
+
+        public ActionResult Details(int Id)
+        {
+            var zadanie = _context.Zadania.Include(c => c.Zajecia).SingleOrDefault(c => c.Id == Id);
+            if (zadanie == null)
+                return HttpNotFound();
+            return View(zadanie);
+        }
+
+        public ActionResult MarkAsDone(int Id)
+        {
+            var zadanie = _context.Zadania.SingleOrDefault(z => z.Id == Id);
+            if (zadanie == null)
+                return HttpNotFound();
+            else
+            {
+                var ZadnieInDb = _context.Zadania.Single(z => z.Id == Id);
+                ZadnieInDb.CzyZrobione = true;
+            }
 
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Zadania");
+        }
+
+        public ActionResult Delete(int Id)
+        {
+            var zadanie = _context.Zadania.SingleOrDefault(z => z.Id == Id);
+            if (zadanie == null)
+                return HttpNotFound();
+
+            _context.Zadania.Remove(zadanie);
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Zadania");
+        }
+
+        public ActionResult Edit(int Id)
+        {
+            var userID = User.Identity.GetUserId();
+            var zadanie = _context.Zadania.SingleOrDefault(z => z.Id == Id);
+            var zajecia = _context.Zajecia.Where(c => c.IdUzytkownika == userID).ToList();
+            if (zadanie == null)
+                return HttpNotFound();
+
+            var zadaniaViewModel = new NewMovieViewModel
+            {
+                zadanie = zadanie,
+                zajecia = zajecia
+            };
+            return View("ZadaniaForm", zadaniaViewModel);
         }
     }
 }

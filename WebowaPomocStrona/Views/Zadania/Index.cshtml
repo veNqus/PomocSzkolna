@@ -9,6 +9,7 @@
 {
     <button type="submit" class="btn btn-primary">Nowe Zadanie</button>
 }
+<br/>
 @if(Model == null)
 {
     <a>Brak jakichkolwiek zadań.</a>
@@ -20,23 +21,26 @@ else
             <th>Zajecia</th>
             <th>Temat</th>
             <th>Termin</th>
+            <th>Opcje</th>
         </tr>
         @foreach (var zadanie in Model)
         {
             if (zadanie.CzyZrobione == false)
             {
                 <tr class="warning">
-                    <td>@Html.ActionLink(@zadanie.Zajecia.Nazwa, "Details", "Zadania", new { Id = zadanie.Id }, null)</td>
+                    <td>@zadanie.Zajecia.Nazwa</td>
                     <td>@zadanie.Temat</td>
                     <td>@zadanie.Termin</td>
+                    <td>@Html.ActionLink("Szczegóły", "Details", "Zadania", new { Id = zadanie.Id }, null)  @Html.ActionLink("Oznacz jako zrobione", "MarkAsDone", "Zadania", new { Id = zadanie.Id }, null)    @Html.ActionLink("Usuń", "Delete", "Zadania", new { Id = zadanie.Id }, null)    @Html.ActionLink("Edytuj", "Edit", "Zadania", new { Id = zadanie.Id }, null)</td>
                 </tr>
             }
             else
             {
                 <tr>
-                    <td>@Html.ActionLink(@zadanie.Zajecia.Nazwa, "Details", "Zadania", new { Id = zadanie.Id }, null)</td>
+                    <td>@zadanie.Zajecia.Nazwa</td>
                     <td>@zadanie.Temat</td>
                     <td>@zadanie.Termin</td>
+                    <td>@Html.ActionLink("Szczegóły", "Details", "Zadania", new { Id = zadanie.Id }, null)  @Html.ActionLink("Usuń", "Delete", "Zadania", new { Id = zadanie.Id }, null)</td>
                 </tr>
             }
         }

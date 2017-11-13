@@ -1,0 +1,12 @@
+﻿@model WebowaPomocStrona.Models.Zadanie
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Szczegóły Zadania: @Model.Temat</h2>
+<li>Zajęcia: @Model.Zajecia.Nazwa</li>
+<li>Termin: @Model.Termin</li>
+<li>Data Dodania: @Model.DataDodania</li>
+<li>Informacje: @Model.Informacje</li>
+
