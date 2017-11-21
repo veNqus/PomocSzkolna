@@ -60,7 +60,7 @@ namespace WebowaPomocStrona.Controllers
         public ActionResult Edit(int Id)
         {
             var userID = User.Identity.GetUserId();
-            var zajecia = _context.Zajecia.SingleOrDefault(c => c.IdUzytkownika == userID);
+            var zajecia = _context.Zajecia.SingleOrDefault(c => c.Id == Id);
             if (zajecia == null)
                 return HttpNotFound();
 
