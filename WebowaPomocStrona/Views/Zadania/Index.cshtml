@@ -10,9 +10,9 @@
     <button type="submit" class="btn btn-primary">Nowe Zadanie</button>
 }
 <br/>
-@if(Model == null)
+@if(!Model.Any())
 {
-    <a>Brak jakichkolwiek zadań.</a>
+    <text>Brak jakichkolwiek zadań.</text>
 }
 else
 {

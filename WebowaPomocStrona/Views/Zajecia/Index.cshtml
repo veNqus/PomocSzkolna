@@ -10,18 +10,17 @@
 <button type="submit" class="btn btn-primary">Nowe Zajęcia</button>
 }
 
-@if (Model == null)
+@if (!Model.Any())
 {
-    <a>Nie masz przypisanych żadnych zajęć.</a>
+    <br/>
+    <text>Nie masz przypisanych żadnych zajęć.</text>
 }
-else
-{
+@Html.Raw(TempData["msg"])
     <br/>
     <ul>
         @foreach (var zajecia in Model)
         {
-            <li>@zajecia.Nazwa  @Html.ActionLink("Edytuj", "Edit", "Zajecia", new { Id = zajecia.Id }, null) </li>
+            <li>@zajecia.Nazwa  @Html.ActionLink("Edytuj", "Edit", "Zajecia", new { Id = zajecia.Id }, null)    @Html.ActionLink("Usuń", "Delete", "Zajecia", new { Id = zajecia.Id },null) </li>
         }
     </ul>
-}
 

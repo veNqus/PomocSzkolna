@@ -71,5 +71,27 @@ namespace WebowaPomocStrona.Controllers
             };
             return View("ZajeciaForm", ZajeciaViewModel);
         }
+
+        public ActionResult Delete(int Id)
+        {
+            var zadania = _context.Zadania.Any(c => c.ZajeciaId == Id);
+            if (zadania == true)
+            {
+                TempData["msg"] = "<script>alert('Nie mozna usunąc gdyż z zajęciami powiązane są zadania');</script>";
+            }
+
+            else
+            {
+                var zajecia = _context.Zajecia.SingleOrDefault(z => z.Id == Id);
+                if (zajecia == null)
+                    return HttpNotFound();
+
+                _context.Zajecia.Remove(zajecia);
+
+                _context.SaveChanges();
+            }
+        
+            return RedirectToAction("Index", "Zajecia");
+        }
     }
 }
