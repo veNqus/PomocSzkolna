@@ -31,7 +31,7 @@ namespace WebowaPomocStrona.Controllers
             var userID = User.Identity.GetUserId();
             //var zadania = _context.Zadania.Include(c => c.Zajecia).ToList();
             var zadania = _context.Zadania.Include(c => c.Zajecia).Where(c => c.IdUzytkownika == userID).ToList();
-            return View(zadania);
+            return View(zadania.OrderByDescending(c => c.Termin));
         }
 
         public ActionResult New()

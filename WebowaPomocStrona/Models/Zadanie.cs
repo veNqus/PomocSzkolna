@@ -12,6 +12,8 @@ namespace WebowaPomocStrona.Models
         public string Temat { get; set; }
         public string Informacje { get; set; }
         public Zajecia Zajecia { get; set; }
+
+        [Display(Name = "Nazwa przedmiotu")]
         public int ZajeciaId { get; set; }
 
         //public int IdZajec { get; set; }
