@@ -30,6 +30,7 @@ namespace WebowaPomocStrona.Controllers.Api
 
                 ZadaniaDoApi zadDoApi = new ZadaniaDoApi();
                 var zajecia = _context.Zajecia.Where(c => c.Id == zad.ZajeciaId).Single();
+                zadDoApi.Id = zad.Id;
                 zadDoApi.CzyZrobione = zad.CzyZrobione;
                 zadDoApi.DataDodania = zad.DataDodania;
                 zadDoApi.IdUzytkownika = zad.IdUzytkownika;

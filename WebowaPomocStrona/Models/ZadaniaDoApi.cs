@@ -7,6 +7,7 @@ namespace WebowaPomocStrona.Models
 {
     public class ZadaniaDoApi
     {
+        public int Id { get; set; }
         public string Temat { get; set; }
         public string Informacje { get; set; }
         public string NazwaZajec { get; set; }
