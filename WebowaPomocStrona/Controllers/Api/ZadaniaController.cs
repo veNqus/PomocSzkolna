@@ -40,7 +40,60 @@ namespace WebowaPomocStrona.Controllers.Api
                 zadDoApi.Termin = zad.Termin;
                 zadaniaDoApi.Add(zadDoApi);
             }
-            return zadaniaDoApi;
+            List<ZadaniaDoApi> PosortowanieZadaniaDoApi = zadaniaDoApi.OrderBy(o => o.Termin).ToList();
+            return PosortowanieZadaniaDoApi;
+        }
+
+        //POST
+        [HttpPost]
+        public string DodajZadanie(ZadaniaZApi zadanie)
+        {
+            try
+            {
+                var ZadanieDoDb = new Zadanie();
+                ZadanieDoDb.Temat = zadanie.Temat;
+                ZadanieDoDb.Informacje = zadanie.Szczególy;
+                DateTime TerminFromString = DateTime.Parse(zadanie.Termin);
+                ZadanieDoDb.Termin = TerminFromString;
+                ZadanieDoDb.ZajeciaId = zadanie.IdPrzedmiotu;
+                ZadanieDoDb.IdUzytkownika = zadanie.IdUzytkownika;
+                ZadanieDoDb.DataDodania = DateTime.Now;
+                ZadanieDoDb.CzyZrobione = zadanie.CzyZrobione;
+                _context.Zadania.Add(ZadanieDoDb);
+                _context.SaveChanges();
+                return "OK";
+            }
+            catch(Exception e)
+            {
+                return "Error: " + e.ToString();
+            }
+            
+        }
+
+        [HttpPut]
+        public string EdytujZajecia(int id, ZadaniaZApi zadanie)
+        {
+            var ZadanieInDb = _context.Zadania.Where(z => z.Id == id).SingleOrDefault();
+            if (ZadanieInDb == null)
+                return "ERROR01";
+            else
+            {
+                if (zadanie.CzyZrobione == true)
+                {
+                    ZadanieInDb.CzyZrobione = true;
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    ZadanieInDb.Temat = zadanie.Temat;
+                    ZadanieInDb.Informacje = zadanie.Szczególy;
+                    ZadanieInDb.ZajeciaId = zadanie.IdPrzedmiotu;
+                    DateTime TerminFromString = DateTime.Parse(zadanie.Termin);
+                    ZadanieInDb.Termin = TerminFromString;
+                    _context.SaveChanges();
+                }
+                return "OK";
+            }
         }
     }
 }
